@@ -1,0 +1,328 @@
+{
+  "project": {
+    "name": "Website Toko Baju Sablon",
+    "description": "Website katalog dan pemesanan baju sablonan dengan checkout via WhatsApp menggunakan Next.js + Supabase",
+    "target_user": "UMKM baju sablon",
+    "checkout_method": "WhatsApp (nomor dinamis via admin)",
+    "future_payment_gateway": "Midtrans",
+    "status": "MVP Development",
+    "scalability": "Single store, scalable architecture",
+    "estimated_products": "50-200+ produk"
+  },
+
+  "tech_stack": {
+    "frontend": {
+      "framework": "Next.js 15",
+      "router": "App Router",
+      "language": "TypeScript",
+      "styling": "Tailwind CSS",
+      "ui_library": ["shadcn/ui", "Headless UI"],
+      "state_management": "Zustand",
+      "theme": {
+        "primary_color": "blue",
+        "style": "modern, clean"
+      }
+    },
+    "backend": {
+      "baas": "Supabase",
+      "database": "PostgreSQL (Supabase)",
+      "storage": "Supabase Storage",
+      "auth": "Supabase Auth (single admin)"
+    },
+    "deployment": {
+      "platform": "Vercel",
+      "domain": "Vercel subdomain (MVP)",
+      "analytics": "Vercel Analytics (built-in)"
+    }
+  },
+
+  "features": {
+    "landing_page": [
+      "Hero section",
+      "Produk unggulan",
+      "Kategori highlight",
+      "Testimoni pelanggan",
+      "CTA ke katalog"
+    ],
+    "katalog": [
+      "Grid produk",
+      "Filter by kategori",
+      "Filter by harga",
+      "Search produk",
+      "Pagination / Infinite scroll",
+      "Sorting (terbaru, harga)"
+    ],
+    "product_detail": [
+      "Gallery gambar",
+      "Nama & harga",
+      "Deskripsi lengkap",
+      "Pilih varian (ukuran, warna)",
+      "Tombol add to cart",
+      "Produk terkait"
+    ],
+    "cart": [
+      "Tambah produk",
+      "Hapus produk",
+      "Update jumlah",
+      "Pilih varian",
+      "Subtotal per item",
+      "Total keseluruhan",
+      "Simpan keranjang (localStorage)"
+    ],
+    "checkout": [
+      "Form data pembeli (nama, alamat, no HP, catatan)",
+      "Ringkasan pesanan",
+      "Generate pesan WhatsApp",
+      "Redirect ke WhatsApp"
+    ],
+    "admin_dashboard": [
+      "Login admin (Supabase Auth)",
+      "Dashboard overview",
+      "CRUD produk",
+      "CRUD kategori",
+      "Upload gambar produk",
+      "Setting nomor WhatsApp",
+      "Setting info toko (tentang, kontak, sosmed)",
+      "Logout"
+    ]
+  },
+
+  "user_flow": {
+    "customer": [
+      "1. User membuka Home (landing page)",
+      "2. User melihat hero & produk unggulan",
+      "3. User klik 'Lihat Katalog'",
+      "4. User filter/search produk",
+      "5. User klik produk → Detail Produk",
+      "6. User pilih varian & add to cart",
+      "7. User buka Keranjang",
+      "8. User isi form checkout (nama, alamat, HP)",
+      "9. User klik 'Pesan via WhatsApp'",
+      "10. Redirect ke WhatsApp dengan pesan otomatis"
+    ],
+    "admin": [
+      "1. Admin login via /admin/login",
+      "2. Admin masuk dashboard",
+      "3. Admin kelola produk (tambah/edit/hapus)",
+      "4. Admin kelola kategori",
+      "5. Admin atur nomor WA & info toko",
+      "6. Admin logout"
+    ]
+  },
+
+  "pages": {
+    "public": [
+      { "path": "/", "name": "Home / Landing Page" },
+      { "path": "/katalog", "name": "Katalog Produk" },
+      { "path": "/katalog/[slug]", "name": "Detail Produk" },
+      { "path": "/keranjang", "name": "Keranjang" },
+      { "path": "/checkout", "name": "Checkout" },
+      { "path": "/tentang", "name": "Tentang Kami" },
+      { "path": "/kontak", "name": "Kontak" }
+    ],
+    "admin": [
+      { "path": "/admin/login", "name": "Login Admin" },
+      { "path": "/admin", "name": "Dashboard" },
+      { "path": "/admin/produk", "name": "Kelola Produk" },
+      { "path": "/admin/produk/tambah", "name": "Tambah Produk" },
+      { "path": "/admin/produk/[id]/edit", "name": "Edit Produk" },
+      { "path": "/admin/kategori", "name": "Kelola Kategori" },
+      { "path": "/admin/pengaturan", "name": "Pengaturan Toko" }
+    ]
+  },
+
+  "folder_structure": {
+    "app": {
+      "description": "Next.js App Router pages",
+      "structure": [
+        "(public)/",
+        "  page.tsx (landing)",
+        "  katalog/page.tsx",
+        "  katalog/[slug]/page.tsx",
+        "  keranjang/page.tsx",
+        "  checkout/page.tsx",
+        "  tentang/page.tsx",
+        "  kontak/page.tsx",
+        "(admin)/",
+        "  admin/login/page.tsx",
+        "  admin/page.tsx",
+        "  admin/produk/page.tsx",
+        "  admin/produk/tambah/page.tsx",
+        "  admin/produk/[id]/edit/page.tsx",
+        "  admin/kategori/page.tsx",
+        "  admin/pengaturan/page.tsx",
+        "api/",
+        "  produk/route.ts",
+        "  kategori/route.ts",
+        "  settings/route.ts"
+      ]
+    },
+    "src": [
+      "components/",
+      "  ui/ (shadcn components)",
+      "  layout/ (Header, Footer, Sidebar)",
+      "  home/ (Hero, FeaturedProducts, etc)",
+      "  katalog/ (ProductCard, FilterSidebar)",
+      "  cart/ (CartItem, CartSummary)",
+      "  admin/ (AdminSidebar, ProductForm)",
+      "lib/",
+      "  supabase.ts (client & server)",
+      "  utils.ts",
+      "store/",
+      "  cartStore.ts (Zustand)",
+      "types/",
+      "  index.ts (TypeScript interfaces)",
+      "hooks/",
+      "  useCart.ts",
+      "  useProducts.ts"
+    ]
+  },
+
+  "database_schema": {
+    "tables": {
+      "products": {
+        "id": "uuid PRIMARY KEY",
+        "slug": "text UNIQUE",
+        "nama": "text",
+        "harga": "integer",
+        "deskripsi": "text",
+        "kategori_id": "uuid REFERENCES categories(id)",
+        "gambar": "text[] (array of URLs)",
+        "varian_ukuran": "text[] (S, M, L, XL, XXL)",
+        "varian_warna": "text[] (Hitam, Putih, Navy, dll)",
+        "stok": "integer DEFAULT 0",
+        "aktif": "boolean DEFAULT true",
+        "featured": "boolean DEFAULT false",
+        "created_at": "timestamptz",
+        "updated_at": "timestamptz"
+      },
+      "categories": {
+        "id": "uuid PRIMARY KEY",
+        "nama": "text",
+        "slug": "text UNIQUE",
+        "deskripsi": "text",
+        "urutan": "integer",
+        "aktif": "boolean DEFAULT true"
+      },
+      "settings": {
+        "id": "uuid PRIMARY KEY",
+        "key": "text UNIQUE",
+        "value": "jsonb",
+        "description": "Untuk: nomor_wa, info_toko, sosmed, dll"
+      },
+      "orders_log": {
+        "id": "uuid PRIMARY KEY",
+        "items": "jsonb",
+        "total": "integer",
+        "customer_name": "text",
+        "customer_phone": "text",
+        "customer_address": "text",
+        "notes": "text",
+        "status": "text (sent, pending)",
+        "created_at": "timestamptz",
+        "description": "Log pesanan untuk tracking (Phase 2)"
+      }
+    },
+    "placeholder_categories": [
+      "Kaos Polos",
+      "Kaos Sablon",
+      "Polo Shirt",
+      "Hoodie",
+      "Jaket",
+      "Kemeja"
+    ]
+  },
+
+  "whatsapp_checkout": {
+    "phone_number_source": "Dinamis dari tabel settings",
+    "message_template": "Halo Admin, saya ingin memesan:\n\n{{items_list}}\n\n---\nTotal: Rp {{total}}\n---\n\nData Pemesan:\nNama: {{nama}}\nNo. HP: {{phone}}\nAlamat: {{alamat}}\nCatatan: {{catatan}}",
+    "items_format": "• {{nama}} ({{ukuran}}, {{warna}}) x{{qty}} = Rp {{subtotal}}"
+  },
+
+  "seo": {
+    "enabled": true,
+    "features": [
+      "SEO-friendly slug",
+      "Meta title & description per halaman",
+      "Open Graph image",
+      "generateMetadata untuk produk",
+      "Sitemap.xml",
+      "Robots.txt"
+    ]
+  },
+
+  "placeholder_content": {
+    "images": "https://picsum.photos/seed/{product_id}/600/600",
+    "store_info": {
+      "nama_toko": "Toko Baju Sablon",
+      "alamat": "Jl. Contoh No. 123, Kota, Provinsi",
+      "telepon": "08xxxxxxxxxx",
+      "email": "info@tokobajusablon.com",
+      "jam_operasional": "Senin - Sabtu: 09:00 - 17:00",
+      "sosmed": {
+        "instagram": "@tokobajusablon",
+        "facebook": "tokobajusablon",
+        "whatsapp": "628xxxxxxxxxx"
+      }
+    },
+    "tentang_kami": "Kami adalah toko baju sablon yang menyediakan berbagai macam produk berkualitas dengan harga terjangkau. Melayani pemesanan satuan hingga grosir untuk kebutuhan komunitas, perusahaan, dan acara."
+  },
+
+  "roadmap": {
+    "phase_1_mvp": {
+      "status": "In Progress",
+      "features": [
+        "✅ Setup Next.js + Tailwind + shadcn/ui",
+        "⬜ Setup Supabase (DB + Auth + Storage)",
+        "⬜ Landing Page (Hero, Featured, Testimoni)",
+        "⬜ Katalog + Filter + Search",
+        "⬜ Detail Produk",
+        "⬜ Keranjang (Zustand + localStorage)",
+        "⬜ Checkout Form → WhatsApp",
+        "⬜ Admin Login",
+        "⬜ Admin Dashboard",
+        "⬜ Admin CRUD Produk & Kategori",
+        "⬜ Admin Setting (WA, Info Toko)",
+        "⬜ Halaman Tentang & Kontak",
+        "⬜ SEO Basic",
+        "⬜ Deploy ke Vercel"
+      ]
+    },
+    "phase_2": [
+      "Log pesanan (orders_log)",
+      "Dashboard analytics (produk populer)",
+      "Upload gambar ke Supabase Storage",
+      "Manajemen stok (habis/tersedia)",
+      "Notifikasi stok menipis"
+    ],
+    "phase_3": [
+      "Integrasi Midtrans",
+      "Status pesanan tracking",
+      "Invoice PDF otomatis",
+      "Akun pelanggan",
+      "Wishlist",
+      "Notifikasi email/WA"
+    ]
+  },
+
+  "development_notes": {
+    "ui_components_needed": [
+      "Button, Input, Select, Textarea (shadcn)",
+      "Card, Badge, Avatar",
+      "Dialog/Modal",
+      "Dropdown Menu",
+      "Table (admin)",
+      "Toast/Notification",
+      "Skeleton (loading state)",
+      "Sheet (mobile menu)"
+    ],
+    "important_considerations": [
+      "Mobile-first design (WhatsApp checkout)",
+      "Optimistic UI updates",
+      "Error boundaries",
+      "404 page custom",
+      "Loading states dengan skeleton",
+      "Form validation (zod + react-hook-form)"
+    ]
+  }
+}
