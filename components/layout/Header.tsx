@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShoppingCart, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { useCartStore } from "@/store/cartStore";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -16,6 +17,12 @@ const navLinks = [
 export default function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const totalItems = useCartStore((state) => state.totalItems());
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md">
@@ -50,9 +57,11 @@ export default function Header() {
             className="relative p-2 text-gray-600 hover:text-blue-600 transition-colors"
           >
             <ShoppingCart className="h-6 w-6" />
-            <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[10px] font-bold text-white">
-              0
-            </span>
+            {isClient && totalItems > 0 && (
+              <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[10px] font-bold text-white animate-in zoom-in">
+                {totalItems}
+              </span>
+            )}
           </Link>
 
           {/* Mobile Menu Toggle */}

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, ShoppingCart, Check, Info } from "lucide-react";
 import ProductGallery from "@/components/katalog/ProductGallery";
+import ProductActions from "@/components/katalog/ProductActions";
 
 interface DetailProdukPageProps {
   params: Promise<{ slug: string }>;
@@ -64,75 +65,23 @@ export default async function DetailProdukPage({
               </p>
             </div>
 
-            <div className="py-6 space-y-6">
-              {/* Varian Ukuran */}
-              {product.varian_ukuran && product.varian_ukuran.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">
-                    Pilih Ukuran
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {product.varian_ukuran.map((ukuran: string) => (
-                      <button
-                        key={ukuran}
-                        className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium hover:border-blue-600 hover:text-blue-600 transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                      >
-                        {ukuran}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+            {/* Product Actions (Client Component) */}
+            <ProductActions product={product} />
 
-              {/* Varian Warna */}
-              {product.varian_warna && product.varian_warna.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">
-                    Pilih Warna
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {product.varian_warna.map((warna: string) => (
-                      <button
-                        key={warna}
-                        className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium hover:border-blue-600 hover:text-blue-600 transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                      >
-                        {warna}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Stok Info */}
-              <div className="flex items-center text-sm text-gray-600">
-                <Check className="h-4 w-4 text-green-500 mr-2" />
-                Stok tersedia:{" "}
-                <span className="font-bold ml-1">{product.stok} pcs</span>
-              </div>
-
-              {/* Add to Cart Button */}
-              <div className="pt-4">
-                <button className="w-full flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-200">
-                  <ShoppingCart className="mr-3 h-6 w-6" />
-                  Tambah ke Keranjang
-                </button>
-              </div>
-
-              {/* Product Description */}
-              <div className="pt-8 border-t">
-                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center">
-                  <Info className="mr-2 h-4 w-4 text-blue-600" />
-                  Deskripsi Produk
-                </h3>
-                <div className="prose prose-sm text-gray-600 max-w-none">
-                  {product.deskripsi
-                    .split("\n")
-                    .map((line: string, i: number) => (
-                      <p key={i} className="mb-2">
-                        {line}
-                      </p>
-                    ))}
-                </div>
+            {/* Product Description */}
+            <div className="pt-8 border-t">
+              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center">
+                <Info className="mr-2 h-4 w-4 text-blue-600" />
+                Deskripsi Produk
+              </h3>
+              <div className="prose prose-sm text-gray-600 max-w-none">
+                {product.deskripsi
+                  .split("\n")
+                  .map((line: string, i: number) => (
+                    <p key={i} className="mb-2">
+                      {line}
+                    </p>
+                  ))}
               </div>
             </div>
           </div>

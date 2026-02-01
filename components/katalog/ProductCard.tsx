@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Product } from "@/types";
-import { ShoppingCart } from "lucide-react";
+import AddToCartButton from "./AddToCartButton";
 
 interface ProductCardProps {
   product: Product;
@@ -57,12 +57,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           >
             Lihat Detail
           </Link>
-          <button
-            className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
-            title="Tambah ke Keranjang"
-          >
-            <ShoppingCart className="h-4 w-4" />
-          </button>
+          <AddToCartButton product={product} variant="icon" />
         </div>
       </div>
     </div>
