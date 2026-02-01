@@ -2,6 +2,7 @@ import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, ShoppingCart, Check, Info } from "lucide-react";
+import ProductGallery from "@/components/katalog/ProductGallery";
 
 interface DetailProdukPageProps {
   params: Promise<{ slug: string }>;
@@ -47,35 +48,7 @@ export default async function DetailProdukPage({
 
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-12">
           {/* Image Gallery */}
-          <div className="mb-10 lg:mb-0">
-            <div className="aspect-square rounded-2xl overflow-hidden bg-gray-100 border shadow-sm">
-              <img
-                src={
-                  product.gambar?.[0] ||
-                  "https://picsum.photos/seed/detail/800/800"
-                }
-                alt={product.nama}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Small Thumbnails (if any) */}
-            {product.gambar && product.gambar.length > 1 && (
-              <div className="mt-4 grid grid-cols-4 gap-4">
-                {product.gambar.map((img: string, idx: number) => (
-                  <div
-                    key={idx}
-                    className="aspect-square rounded-lg overflow-hidden border bg-gray-50 cursor-pointer hover:opacity-75 transition-opacity"
-                  >
-                    <img
-                      src={img}
-                      alt={`${product.nama} thumbnail ${idx}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <ProductGallery images={product.gambar || []} name={product.nama} />
 
           {/* Product Info */}
           <div className="flex flex-col">
