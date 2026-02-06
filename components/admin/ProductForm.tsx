@@ -102,8 +102,17 @@ export default function ProductForm({ mode, productId, onSubmit, onCancel }: Pro
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    const val = type === "number" ? Number(value) : value;
     
+    // Handle numeric inputs separately
+    let val: string | number = value;
+    if (type === "text" && (name === "harga" || name === "stok")) {
+      // Only allow numeric values for harga and stok fields
+      const numericValue = value.replace(/[^0-9]/g, '');
+      val = numericValue === '' ? 0 : Number(numericValue);
+    } else if (type === "number") {
+      val = value === '' ? 0 : Number(value);
+    }
+
     setFormData({
       ...formData,
       [name]: val,
@@ -271,13 +280,14 @@ export default function ProductForm({ mode, productId, onSubmit, onCancel }: Pro
               Harga *
             </label>
             <Input
-              type="number"
+              type="text"
               id="harga"
               name="harga"
               value={formData.harga}
               onChange={handleInputChange}
               required
-              min="0"
+              inputMode="numeric"
+              pattern="[0-9]*"
               className="w-full"
               placeholder="0"
             />
@@ -390,12 +400,13 @@ export default function ProductForm({ mode, productId, onSubmit, onCancel }: Pro
               Stok
             </label>
             <Input
-              type="number"
+              type="text"
               id="stok"
               name="stok"
               value={formData.stok}
               onChange={handleInputChange}
-              min="0"
+              inputMode="numeric"
+              pattern="[0-9]*"
               className="w-full"
               placeholder="0"
             />

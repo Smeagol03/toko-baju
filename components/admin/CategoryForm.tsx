@@ -54,14 +54,22 @@ export default function CategoryForm({ category, onSubmit, onCancel }: CategoryF
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    
+
     if (name === "nama") {
       setSlug(generateSlug(value));
     }
-    
+
+    // Handle numeric inputs separately
+    let processedValue: string | number = value;
+    if (name === "urutan") {
+      // Only allow numeric values for urutan field
+      const numericValue = value.replace(/[^0-9]/g, '');
+      processedValue = numericValue === '' ? 0 : Number(numericValue);
+    }
+
     setFormData({
       ...formData,
-      [name]: name === "urutan" ? Number(value) : value,
+      [name]: processedValue,
     });
   };
 
@@ -173,12 +181,13 @@ export default function CategoryForm({ category, onSubmit, onCancel }: CategoryF
           Urutan Tampil
         </label>
         <input
-          type="number"
+          type="text"
           id="urutan"
           name="urutan"
           value={formData.urutan}
           onChange={handleInputChange}
-          min="0"
+          inputMode="numeric"
+          pattern="[0-9]*"
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Urutan tampil"
         />
